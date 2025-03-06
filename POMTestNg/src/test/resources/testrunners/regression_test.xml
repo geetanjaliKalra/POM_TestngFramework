@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Differnt browsers Regression suite" verbose="3" thread-count="3"
+	parallel="tests">
+
+
+	<test name="GoogleTest">
+		<parameter name="browser" value="chrome"></parameter>
+		<parameter name="URL" value="https://www.google.com/"></parameter>
+		<classes>
+			<class name="DiffBrowsers.GoogleTest" />
+		</classes>
+	</test>
+
+	<!--<test name="OpenCartTest_firefox">
+		<parameter name="browser" value="firefox"></parameter>
+		<parameter name="URL"
+			value="https://naveenautomationlabs.com/opencart/index.php?route=account/login"></parameter>
+		<classes>
+			<class name="DiffBrowsers.OpenCartLoginTest" />
+		</classes>
+	</test>
+	
+	<test name="OpenCartTest_edge">
+		<parameter name="browser" value="edge"></parameter>
+		<parameter name="URL"
+			value="https://naveenautomationlabs.com/opencart/index.php?route=account/login"></parameter>
+		<classes>
+			<class name="DiffBrowsers.OpenCartLoginTest" />
+		</classes>
+	</test>-->
+
+
+</suite>
