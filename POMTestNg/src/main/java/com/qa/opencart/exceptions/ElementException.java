@@ -1,5 +1,9 @@
 package com.qa.opencart.exceptions;
 
-public class ElementException {
+public class ElementException extends RuntimeException {
+
+	public ElementException(String msg) {
+		super(msg);
+	}
 
 }
