@@ -17,8 +17,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.qa.opencart.exceptions.ElementException;
 
-
-
 public class ElementUtil {
 	private WebDriver driver;
 
@@ -74,6 +72,7 @@ public class ElementUtil {
 	 * method to find the value of an attribute of the element like src,value
 	 */
 	public String doGetAttribute(By locator, String Attribute) {
+		//System.out.println(getElement(locator).getAttribute("text"));
 		return getElement(locator).getAttribute(Attribute);
 	}
 
@@ -110,7 +109,7 @@ public class ElementUtil {
 	 * @param locator
 	 * @return
 	 */
-	public int getElementCount(By locator) {
+	public int getElementsCount(By locator) {
 
 		return getElements(locator).size();
 	}
@@ -132,6 +131,13 @@ public class ElementUtil {
 				elementText.add(text);
 			}
 		}
+		return elementText;
+	}
+
+	public String getElementText(By locator) {
+
+		WebElement element = getElement(locator);
+		String elementText = element.getText();		
 		return elementText;
 	}
 
@@ -248,7 +254,7 @@ public class ElementUtil {
 	public boolean doIsDisplayed(By locator) {
 		try {
 			boolean flag = getElement(locator).isDisplayed();
-			System.out.println("Element is displayed ");
+			// System.out.println("Element is displayed ");
 			return flag;
 		} catch (NoSuchElementException e) {
 			System.out.println("Element is not displayed " + locator);
@@ -298,18 +304,18 @@ public class ElementUtil {
 		return driver.switchTo().alert();
 	}
 
-	
-	/****Wait for Alert
+	/****
+	 * Wait for Alert
 	 * 
 	 * @param locator
 	 * @return
 	 */
 	public Alert getAlert(int timeout) {
 
-		WebDriverWait wait= new WebDriverWait(driver,Duration.ofSeconds(timeout));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
 		return wait.until(ExpectedConditions.alertIsPresent());
 	}
-	
+
 	public String getAlertText() {
 
 		Alert alert = getAlert();
@@ -318,32 +324,32 @@ public class ElementUtil {
 		System.out.println("Text on alert is " + text);
 		return text;
 	}
-	
+
 	public String getAlertText(int timeout) {
-		
+
 		Alert alert = getAlert(timeout);
 		return alert.getText();
 	}
-	
+
 	public void acceptAlert(int timeout) {
 
-		WebDriverWait wait= new WebDriverWait(driver,Duration.ofSeconds(timeout));
-		 wait.until(ExpectedConditions.alertIsPresent()).accept();
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		wait.until(ExpectedConditions.alertIsPresent()).accept();
 	}
-	
+
 	public void dismissAlert(int timeout) {
 
-		WebDriverWait wait= new WebDriverWait(driver,Duration.ofSeconds(timeout));
-		 wait.until(ExpectedConditions.alertIsPresent()).dismiss();
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		wait.until(ExpectedConditions.alertIsPresent()).dismiss();
 	}
-	
+
 	public void alertSendKeys(String value) {
-		
+
 		driver.switchTo().alert().sendKeys(value);
 	}
-	
-public void alertSendKeys(String value,int timeout) {
-		
+
+	public void alertSendKeys(String value, int timeout) {
+
 		getAlert(timeout).sendKeys(value);
 	}
 
@@ -388,80 +394,89 @@ public void alertSendKeys(String value,int timeout) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
 		return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 	}
-	
-	
+
+	public List<WebElement> waitForElementsVisible(By locator, int timeout) {
+		try {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return List.of();
+		}
+		}
+
 	/**
 	 * doSendKeys with a wait
+	 * 
 	 * @param locator
 	 * @param value
 	 * @param timeout
 	 */
-	
-	public void doSendKeys(By locator, String value,int timeout) {
+
+	public void doSendKeys(By locator, String value, int timeout) {
 		nullCheck(value);
-		waitForElementVisible(locator,timeout).sendKeys(value);
+		waitForElementVisible(locator, timeout).clear();
+		getElement(locator).sendKeys(value);
 	}
-/**
- * click with a wait
- * @param locator
- * @param timeout
- */
-	public void doClick(By locator,int timeout) {
-		waitForElementVisible(locator,timeout).click();
+
+	/**
+	 * click with a wait
+	 * 
+	 * @param locator
+	 * @param timeout
+	 */
+	public void doClick(By locator, int timeout) {
+		waitForElementVisible(locator, timeout).click();
 
 	}
-	
-	
-	public void clickWhenReady(By locator,int timeout) {
-		WebDriverWait wait= new WebDriverWait(driver,Duration.ofSeconds(timeout));
+
+	public void clickWhenReady(By locator, int timeout) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
 		wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
 	}
-	
-	public String waitForTitleConatins(String titlefraction,int timeout) {
-		WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(timeout));
+
+	public String waitForTitleConatins(String titlefraction, int timeout) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
 		try {
-			if(wait.until(ExpectedConditions.titleContains(titlefraction)))
+			if (wait.until(ExpectedConditions.titleContains(titlefraction)))
 				return driver.getTitle();
-		}
-		catch(TimeoutException e) {
+		} catch (TimeoutException e) {
 			System.out.println("Title not found");
 		}
 		return driver.getTitle();
 	}
-	
-	public String waitForTitleToBe(String title,int timeout) {
-		WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(timeout));
+
+	public String waitForTitleToBe(String title, int timeout) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
 		try {
-			if(wait.until(ExpectedConditions.titleIs(title)))
+			if (wait.until(ExpectedConditions.titleIs(title)))
 				return driver.getTitle();
-		}
-		catch(TimeoutException e) {
+		} catch (TimeoutException e) {
 			System.out.println("Title not found");
 		}
 		return driver.getTitle();
 	}
-	
-	public String waitForURLToBe(String URL,int timeout) {
-		WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(timeout));
+
+	public String waitForURLToBe(String URL, int timeout) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
 		try {
-			if(wait.until(ExpectedConditions.urlToBe(URL)))
+			if (wait.until(ExpectedConditions.urlToBe(URL)))
 				return driver.getTitle();
-		}
-		catch(TimeoutException e) {
+		} catch (TimeoutException e) {
 			System.out.println("Title not found");
 		}
 		return driver.getTitle();
 	}
-	
-	public String waitForURLContains(String URLFraction,int timeout) {
-		WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(timeout));
+
+	public String waitForURLContains(String URLFraction, int timeout) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
 		try {
-			if(wait.until(ExpectedConditions.urlContains(URLFraction)))
-				return driver.getTitle();
+			if (wait.until(ExpectedConditions.urlContains(URLFraction)))
+				return driver.getCurrentUrl();
+		} catch (TimeoutException e) {
+			System.out.println("URL not found");
 		}
-		catch(TimeoutException e) {
-			System.out.println("Title not found");
-		}
-		return driver.getTitle();
+		return driver.getCurrentUrl();
 	}
 }

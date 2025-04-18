@@ -1,6 +1,4 @@
 package com.qa.opencart.tests;
-
-import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -19,7 +17,7 @@ public class LoginPageTest extends BaseTest {
 	@Test(priority=2)
 	public void loginPageURLtest() {
 		String actualloginPageURL = loginpage.getLoginPageURL();
-		Assert.assertTrue(actualloginPageURL.contains(AppConstants.ACCOUNT_PAGE_FRACTION_URL), AppError.URL_NOT_FOUND);
+		Assert.assertTrue(actualloginPageURL.contains(AppConstants.LOGIN_PAGE_FRACTION_URL), AppError.URL_NOT_FOUND);
 	}
 
 	@Test(priority=3)
@@ -30,7 +28,8 @@ public class LoginPageTest extends BaseTest {
 	@Test(priority=4)
 	public void loginTest() {
 
-		String actualaccountPageTitle = loginpage.doLogin(prop.getProperty("username"), prop.getProperty("password"));
-		Assert.assertEquals(actualaccountPageTitle, AppConstants.ACCOUNT_PAGE_TITLE, AppError.TITLE_NOT_FOUND);
+		accpage = loginpage.doLogin(prop.getProperty("username"), prop.getProperty("password"));
+		Assert.assertEquals(accpage.AccountsPageTitle(),AppConstants.ACCOUNT_PAGE_TITLE,AppError.TITLE_NOT_FOUND);
+	
 	}
 }
