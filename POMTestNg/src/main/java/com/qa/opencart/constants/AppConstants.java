@@ -20,6 +20,7 @@ public class AppConstants {
 	
 	public static final String TEST_DATA_FILE_PATH="./src/test/resources/testdata/TestData.xlsx";
 	public static final String REGISTER_TEST_DATA_SHEETNAME="register";
+	public static final String PRODUCTS_IMAGES_TEST_DATA_SHEETNAME="productimages";
 	
 
 

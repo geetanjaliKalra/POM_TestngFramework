@@ -6,8 +6,10 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.qa.opencart.base.BaseTest;
+import com.qa.opencart.constants.AppConstants;
 import com.qa.opencart.errors.AppError;
 import com.qa.opencart.pages.SearchResultsPage;
+import com.qa.opencart.utils.ExcelUtil;
 
 public class ProductsPageInfoTest extends BaseTest {
 
@@ -46,15 +48,32 @@ public class ProductsPageInfoTest extends BaseTest {
 
 	@DataProvider
 	public Object[][] getImagesData() {
-		return new Object[][] { { "Samsung", "Samsung Galaxy Tab 10.1", 7 }, { "Macbook", "MacBook Air", 4 },
+		return new Object[][] { 
+			{ "Samsung", "Samsung Galaxy Tab 10.1", 7 }
+			, { "Macbook", "MacBook Air", 4 },
 				{ "iMac", "iMac", 3 } };
 	}
 
-	@Test(dataProvider = "getImagesData")
-	public void imagesCountTest(String searchItem, String products, int imgCount) {
+	
+	@DataProvider
+	public Object[][] getImagesDataFromSheet() {
+		return ExcelUtil.getTestData(AppConstants.PRODUCTS_IMAGES_TEST_DATA_SHEETNAME);
+	}
+	
+	/* This is for using data provider from code
+	 * @Test(dataProvider = "getImagesData")
+	 *  public void imagesCountTest(String searchItem, String products,int imgCount)
+	 *  { searchresultpage =
+	 * accpage.doSearch(searchItem); productinfopage =
+	 * searchresultpage.searchProduct(products);
+	 * Assert.assertEquals(productinfopage.getProductImagesCount(), imgCount,
+	 * AppError.IMAGE_COUNT_MISMATCHED); }
+	 */
+	@Test(dataProvider = "getImagesDataFromSheet")
+	public void imagesCountTest(String searchItem, String products, String imgCount) {
 		searchresultpage = accpage.doSearch(searchItem);
 		productinfopage = searchresultpage.searchProduct(products);
-		Assert.assertEquals(productinfopage.getProductImagesCount(), imgCount, AppError.IMAGE_COUNT_MISMATCHED);
+		Assert.assertEquals(productinfopage.getProductImagesCount(), Integer.parseInt(imgCount), AppError.IMAGE_COUNT_MISMATCHED);
 	}
 	
 	@DataProvider
