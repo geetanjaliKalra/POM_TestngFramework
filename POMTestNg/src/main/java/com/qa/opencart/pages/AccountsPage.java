@@ -2,14 +2,9 @@ package com.qa.opencart.pages;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.testng.Assert;
-
 import com.qa.opencart.constants.AppConstants;
-import com.qa.opencart.errors.AppError;
 import com.qa.opencart.utils.ElementUtil;
 import com.qa.opencart.utils.TimeUtil;
 
