@@ -6,7 +6,9 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.qa.opencart.base.BaseTest;
+import com.qa.opencart.constants.AppConstants;
 import com.qa.opencart.errors.AppError;
+import com.qa.opencart.utils.ExcelUtil;
 import com.qa.opencart.utils.StringUtil;
 
 public class RegisterPageTest extends BaseTest {
@@ -27,7 +29,14 @@ public class RegisterPageTest extends BaseTest {
 		};
 	}
 	
-	@Test(dataProvider="getUserRegistrationData")
+	@DataProvider
+	public Object[][] getUserRegistrationDataFromSheet(){
+		
+		return ExcelUtil.getTestData(AppConstants.REGISTER_TEST_DATA_SHEETNAME);
+	}
+	
+	
+	@Test(dataProvider="getUserRegistrationDataFromSheet")
 	public void userRegistrationTest(String firstname,String lastname,String phone,String password,String subscribeOption) {
 		Assert.assertTrue(
 		registerpage.doRegister(firstname, lastname, 

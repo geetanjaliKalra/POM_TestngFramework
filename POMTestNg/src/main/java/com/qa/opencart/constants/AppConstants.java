@@ -16,7 +16,10 @@ public class AppConstants {
 	public static final Collection<?> list = Arrays.asList("My Account","My Orders","My Affiliate Account","Newsletter");
 	public static final String SuccessMSG = "Your Account Has Been Created!" ;;
 	
+	//*********Excel Sheet Details******8
 	
+	public static final String TEST_DATA_FILE_PATH="./src/test/resources/testdata/TestData.xlsx";
+	public static final String REGISTER_TEST_DATA_SHEETNAME="register";
 	
 
 
