@@ -17,6 +17,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.qa.opencart.exceptions.ElementException;
 
+import io.qameta.allure.Step;
+
 public class ElementUtil {
 	private WebDriver driver;
 
@@ -446,7 +448,8 @@ public class ElementUtil {
 		}
 		return driver.getTitle();
 	}
-
+	
+	@Step("Waiting for title and capturing it")
 	public String waitForTitleToBe(String title, int timeout) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
 		try {
