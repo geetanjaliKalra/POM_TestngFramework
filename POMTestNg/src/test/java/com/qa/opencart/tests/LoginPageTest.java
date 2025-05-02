@@ -1,9 +1,13 @@
 package com.qa.opencart.tests;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import com.qa.opencart.base.BaseTest;
 import com.qa.opencart.constants.AppConstants;
 import com.qa.opencart.errors.AppError;
+import com.qa.opencart.listeners.AllureReportListener;
+import com.qa.opencart.listeners.ExtentReportListener;
+
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
@@ -13,6 +17,7 @@ import io.qameta.allure.Story;
 
 @Epic("Automation testing of Open cart app")
 @Story("Login page test")
+@Listeners(ExtentReportListener.class) //ony report works, retry will work from xml only
 public class LoginPageTest extends BaseTest {
 	
 	@Description("===Login page title test===")

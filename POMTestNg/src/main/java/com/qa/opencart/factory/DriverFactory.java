@@ -23,6 +23,7 @@ public class DriverFactory {
 
 	WebDriver driver;
 	Properties prop;
+	OptionsManager optionsManager;
 	public static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<WebDriver>();
 
 	/**
@@ -36,20 +37,20 @@ public class DriverFactory {
 		String browser = prop.getProperty("browser");
 		String url = prop.getProperty("url");
 		System.out.println("Passed browser is " + browser);
-
+		optionsManager = new OptionsManager(prop);
 		switch (browser.toLowerCase().trim()) {
 
 		case "chrome":
 			// driver = new ChromeDriver();
-			tlDriver.set(new ChromeDriver());
+			tlDriver.set(new ChromeDriver(optionsManager.getChromeOptions()));
 			break;
 		case "firefox":
 			// driver = new FirefoxDriver();
-			tlDriver.set(new FirefoxDriver());
+			tlDriver.set(new FirefoxDriver(optionsManager.getFirefoxOptions()));
 			break;
 		case "edge":
 			// driver = new EdgeDriver();
-			tlDriver.set(new EdgeDriver());
+			tlDriver.set(new EdgeDriver(optionsManager.getEdgeOptions()));
 			break;
 		default:
 			System.out.println("Please pass the right browser " + browser);

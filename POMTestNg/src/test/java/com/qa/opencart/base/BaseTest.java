@@ -20,6 +20,7 @@ public class BaseTest {
 
 	DriverFactory df;
 	WebDriver driver;
+	
 	protected Properties prop;
 	protected LoginPage loginpage;
 	protected AccountsPage accpage;
